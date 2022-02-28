@@ -3,7 +3,6 @@ import { CssBaseline } from "@mui/material";
 import PokemonInfo from '../components/PokemonInfo';
 import PokemonFilter from '../components/PokemonFilter';
 import PokemonTable from '../components/PokemonTable';
-import store from '../src/store';
 
 // styled Title component
 const Title = styled.h1`
@@ -24,22 +23,8 @@ const PageContainer = styled.div`
   padding-top: 1rem;
 `;
 
-export const getServerSideProps = async() => {
-  
-  const resp = await fetch("http://localhost:3000/pokemon.json");
-  const pokemons = await resp.json();
-  
-  return {
-    props: {
-      pokemons
-    }
-  }
-}
-
-
 export default function Home({pokemons}) {
-  store.setPokemons(pokemons);
-
+  
   return (
     <>      
       <PageContainer>

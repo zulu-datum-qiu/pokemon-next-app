@@ -14,12 +14,26 @@ const PageContainer = styled.div`
   padding-top: 1rem;
 `;
 
-export const getServerSideProps = async(context) => {
+export const getStaticPaths = () => {
   
-  const resp = await fetch("http://localhost:3000/pokemon.json");
-  const pokemons = await resp.json();
+  const pokemons = require('../../src/pokemon.json');
+  const paths = pokemons.map((p) => ({
+    params: {
+      id: p.id.toString()
+    }
+  }));
+  
+  return {
+    paths, 
+    fallback: false
+  };
+}
+
+export const getStaticProps = (context) => {
+  
+  const pokemons = require("../../src/pokemon.json");
   const pokemon = pokemons.find(({id}) => {
-    return id.toString() === context.query.id;
+    return id.toString() === context.params.id;
   })
   return {
     props: {

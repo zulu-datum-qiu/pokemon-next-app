@@ -10,7 +10,7 @@ import { makeObservable, observable, computed, action } from 'mobx';
 
 
 class Store {
-  pokemons = [];
+  pokemons = require('./pokemon.json');
   filter = "";
   selectedItem = null
 
@@ -22,11 +22,11 @@ class Store {
       setPokemons: action,
       setFilter: action,
       setSelectedItem: action,
-      filteredPokemon: computed
+      filteredPokemons: computed
     });
   }
 
-  get filteredPokemon(){
+  get filteredPokemons(){
     return this.pokemons
     .filter(
       (pokemon) => pokemon.name.english.toLowerCase().includes(this.filter.toLowerCase())
@@ -48,17 +48,5 @@ class Store {
 };
 
 const store = new Store();
-
-const pullData = async() => {
-  const resp = await fetch("http://localhost:3000/pokemon.json");
-  const data = await resp.json();
-  
-  // update the state that tracks the pokemon data
-  store.setPokemons(data);
-}
-
-// if(typeof window !== "undefined"){
-//   pullData();
-// }
 
 export default store;

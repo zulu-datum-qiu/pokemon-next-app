@@ -14,7 +14,7 @@ const PokemonTable = () => {
       </thead>
       <tbody>
         {
-          store.filteredPokemon
+          store.filteredPokemons
           .slice(0,20)
           .map((pokemon) => (
             <PokemonRow pokemon={pokemon} key={pokemon.id} onClick={(pokemon) => store.setSelectedItem(pokemon)}/>
