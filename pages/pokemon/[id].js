@@ -6,7 +6,7 @@
 import { withRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { CssBaseline, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import store from '../../src/store';
+// import store from '../../src/store';
 
 const PageContainer = styled.div`
   margin: auto;
@@ -14,10 +14,21 @@ const PageContainer = styled.div`
   padding-top: 1rem;
 `;
 
-export default withRouter(( {router} ) => {
-    
-  const pokemon = store.pokemons.find(({id}) => id.toString() === router.query.id);
+export const getServerSideProps = async(context) => {
+  
+  const resp = await fetch("http://localhost:3000/pokemon.json");
+  const pokemons = await resp.json();
+  const pokemon = pokemons.find(({id}) => {
+    return id.toString() === context.query.id;
+  })
+  return {
+    props: {
+      pokemon
+    }
+  }
+}
 
+export default withRouter(( {pokemon} ) => {
   return (
     <>
       <PageContainer>

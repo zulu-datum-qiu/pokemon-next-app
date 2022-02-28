@@ -57,8 +57,8 @@ const pullData = async() => {
   store.setPokemons(data);
 }
 
-if(typeof window !== "undefined"){
-  pullData();
-}
+// if(typeof window !== "undefined"){
+//   pullData();
+// }
 
 export default store;
